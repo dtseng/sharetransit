@@ -7,6 +7,9 @@ const app = express()
 
 const token = process.env.VERIFY_TOKEN
 const access = process.env.ACCESS_TOKEN
+const apiKey = process.env.API_KEY
+
+
 
 app.set('port', (process.env.PORT || 5000))
 
