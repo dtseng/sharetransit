@@ -1,0 +1,25 @@
+{
+  "name": "transit",
+  "version": "1.0.0",
+  "description": "shows you transit information",
+  "main": "index.js",
+  "scripts": {
+    "test": "hahaha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "later"
+  },
+  "keywords": [
+    "facebook",
+    "messenger",
+    "transit"
+  ],
+  "author": "David Tseng",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.16.0",
+    "express": "^4.14.0",
+    "request": "^2.79.0"
+  }
+}
