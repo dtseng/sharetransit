@@ -98,6 +98,8 @@ function sendGenericMessage(recipientId, messageText) {
 function sendTextMessage(recipientId, messageText) {
 		request(api + 'agencies/' + messageText, function(error, response, body) {
 			sendMessage = JSON.parse(body)['title']
+			console.log(sendMessage)
+			
 			var messageData = {
 		    recipient: {
 		      id: recipientId
