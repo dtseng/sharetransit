@@ -4,6 +4,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const request = require('request')
 const app = express()
+const api = 'http://restbus.info/api/'
 
 const token = process.env.VERIFY_TOKEN
 const access = process.env.ACCESS_TOKEN
@@ -95,16 +96,30 @@ function sendGenericMessage(recipientId, messageText) {
 }
 
 function sendTextMessage(recipientId, messageText) {
+	json = jsonFromURL(api + '/agencies/' + messageText)
+	console.log(json)
+	sendMessage = json[0]  
   var messageData = {
     recipient: {
       id: recipientId
     },
     message: {
-      text: messageText
+      text: sendMessage
     }
   };
 
   callSendAPI(messageData);
+}
+
+function jsonFromURL(url) {
+	request(url, function(error, response, body) {
+	  if (!error && response.statusCode === 200) {
+	    return JSON.parse(body)
+	  } else {
+	    console.log("Got an error: ", error, ", status code: ", response.statusCode)
+	    return 
+	  }
+	})
 }
 
 function callSendAPI(messageData) {
