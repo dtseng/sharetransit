@@ -102,16 +102,24 @@ function sendTextMessage(recipientId, messageText) {
 	stopNumber = splitText[2]
 	requestString = api + 'agencies/' + agency + '/routes/' + busNumber + '/stops/' + stopNumber + '/predictions'
 	console.log(requestString)
-  var messageData = {
-    recipient: {
-      id: recipientId
-    },
-    message: {
-      text: requestString
-    }
-  };
+	
+  request(requestString, function(error, response, body) {
+		if (error)
+			sendMessage = "error" + error
+		else
+			sendMessage = JSON.parse(body)[0]['values'][0]['minutes'] + ' minutes'
+		console.log(sendMessage)
 
-  callSendAPI(messageData);
+		var messageData = {
+	    recipient: {
+	      id: recipientId
+	    },
+	    message: {
+	      text: sendMessage
+	    }
+	  };
+	  callSendAPI(messageData);
+	})
 }
 
 function callSendAPI(messageData) {
