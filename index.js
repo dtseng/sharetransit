@@ -4,6 +4,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const request = require('request')
 const app = express()
+const api = 'http://restbus.info/api/'
 
 const token = process.env.VERIFY_TOKEN
 const access = process.env.ACCESS_TOKEN
@@ -95,6 +96,12 @@ function sendGenericMessage(recipientId, messageText) {
 }
 
 function sendTextMessage(recipientId, messageText) {
+	splitText = messageText.split(" ")
+	agency = splitText[0]
+	busNumber = splitText[1]
+	stopNumber = splitText[2]
+	requestString = api + 'agencies/' + agency + '/routes/' + busNumber + '/stops/' + stopNumber + '/predictions'
+	console.log(requestString)
   var messageData = {
     recipient: {
       id: recipientId
