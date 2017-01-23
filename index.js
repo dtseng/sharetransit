@@ -74,21 +74,10 @@ function receivedMessage(event) {
   var messageText = message.text;
   var messageAttachments = message.attachments;
 
-  if (messageText) {
-
-    // If we receive a text message, check to see if it matches a keyword
-    // and send back the example. Otherwise, just echo the text we received.
-    switch (messageText) {
-      case 'generic':
-        sendGenericMessage(senderID);
-        break;
-
-      default:
-        sendTextMessage(senderID, messageText);
-    }
-  } else if (messageAttachments) {
+  if (messageText)
+      sendTextMessage(senderID, messageText);
+  else if (messageAttachments) {
     sendTextMessage(senderID, "Message with attachment received");
-  }
 }
 
 function sendGenericMessage(recipientId, messageText) {
@@ -96,18 +85,17 @@ function sendGenericMessage(recipientId, messageText) {
 }
 
 function sendTextMessage(recipientId, messageText) {
-	splitText = messageText.split(" ")
-	agency = splitText[0]
-	busNumber = splitText[1]
-	stopNumber = splitText[2]
-	requestString = api + 'agencies/' + agency + '/routes/' + busNumber + '/stops/' + stopNumber + '/predictions'
-	console.log(requestString)
-	
+	splitText = messageText.split(" ");
+	agency = splitText[0];
+	busNumber = splitText[1];
+	stopNumber = splitText[2];
+	requestString = api + 'agencies/' + agency + '/routes/' + busNumber + '/stops/' + stopNumber + '/predictions';
+	console.log(requestString);
   request(requestString, function(error, response, body) {
 		if (error)
-			sendMessage = "error" + error
+			sendMessage = "error" + error;
 		else
-			sendMessage = JSON.parse(body)[0]['values'][0]['minutes'] + ' minutes'
+			sendMessage = JSON.parse(body)[0]['values'][0]['minutes'] + ' minutes';
 		console.log(sendMessage)
 
 		var messageData = {
