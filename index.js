@@ -4,7 +4,6 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const request = require('request')
 const app = express()
-const api = 'http://restbus.info/api/'
 
 const token = process.env.VERIFY_TOKEN
 const access = process.env.ACCESS_TOKEN
@@ -73,8 +72,6 @@ function receivedMessage(event) {
 
   var messageText = message.text;
   var messageAttachments = message.attachments;
-  console.log("Testing coordinates")
-  console.log(messageAttachments[0].payload.coordinates.lat)
 
   if (messageText) {
 
