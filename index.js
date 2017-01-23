@@ -73,6 +73,8 @@ function receivedMessage(event) {
 
   var messageText = message.text;
   var messageAttachments = message.attachments;
+  console.log("Testing coordinates")
+  console.log(messageAttachments[0].payload.coordinates.lat)
 
   if (messageText) {
 
@@ -97,9 +99,12 @@ function sendGenericMessage(recipientId, messageText) {
 
 function sendTextMessage(recipientId, messageText) {
 		request(api + 'agencies/' + messageText, function(error, response, body) {
-			sendMessage = JSON.parse(body)['title']
+			if (error)
+				sendMessage = "error" + error
+			else
+				sendMessage = JSON.parse(body)['title']
 			console.log(sendMessage)
-			
+
 			var messageData = {
 		    recipient: {
 		      id: recipientId
@@ -110,17 +115,6 @@ function sendTextMessage(recipientId, messageText) {
 		  };
 		  callSendAPI(messageData);
 		})
-}
-
-function jsonFromURL(url) {
-	request(url, function(error, response, body) {
-	  if (!error && response.statusCode === 200) {
-	    return JSON.parse(body)
-	  } else {
-	    console.log("Got an error: ", error, ", status code: ", response.statusCode)
-	    return 
-	  }
-	})
 }
 
 function callSendAPI(messageData) {
